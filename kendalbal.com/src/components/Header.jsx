@@ -94,14 +94,18 @@ export default function Header() {
       <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${
         scrolled ? 'bg-white/90 backdrop-blur-md shadow-lg dark:bg-gray-900/90' : 'bg-transparent'
       } ${headerVisible || isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="container mx-auto flex items-center px-4 sm:px-6 lg:px-8 py-4">
+        <div className="container mx-auto flex items-center px-4 sm:px-6 lg:px-8 py-6">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white font-bold text-lg">N</span>
+            <button onClick={() => scrollToSection('hero')} className="flex items-center">
+              <div className="w-12 h-12 rounded-lg overflow-hidden mr-3">
+                <img 
+                  src="/K_1.png" 
+                  alt="Kendal Bal Logo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
-            </Link>
+            </button>
           </div>
 
           {/* Spacer to push navigation to the right */}

@@ -221,3 +221,55 @@ html {
 .section-padding {
   @apply py-20 px-4 sm:px-6 lg:px-8;
 }
+
+/* Mouse flashlight effect */
+.mouse-flashlight {
+  position: fixed;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.10) 25%, rgba(139, 92, 246, 0.06) 40%, rgba(139, 92, 246, 0.03) 60%, transparent 80%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+/* Cursor pointer for interactive elements */
+button,
+a,
+.cursor-pointer,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+  cursor: pointer;
+}
+
+/* Ensure text inputs keep text cursor */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+textarea {
+  cursor: text;
+}
+
+/* Spinner animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-spin-slow {
+  animation: spin 2s linear infinite;
+}
