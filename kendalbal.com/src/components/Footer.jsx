@@ -48,7 +48,7 @@ export default function Footer() {
     }`}>
       <div className="container mx-auto px-4 py-12 pb-16">
           <div className="text-center">
-          <p className={`text-sm leading-relaxed max-w-4xl mx-auto tracking-wide ${
+          <p className={`text-xs sm:text-sm leading-relaxed max-w-4xl mx-auto tracking-wide ${
             isDarkMode ? 'text-gray-400' : 'text-gray-800'
           }`}>
             Built in <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-800'}`}>Visual Studio Code</a> with a focus on quality and ❤️<br />
