@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -8,6 +9,7 @@ export default function Header() {
   const [headerVisible, setHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
+  const { isDarkMode, toggleTheme } = useTheme();
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -117,7 +119,9 @@ export default function Header() {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href.substring(1))}
-                className="relative px-3 py-2 text-sm font-medium transition-colors duration-200 text-gray-300 hover:text-purple-400"
+                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] ${
+                  isDarkMode ? 'text-gray-300' : 'text-black'
+                }`}
               >
                 {item.name}
               </button>
@@ -126,10 +130,22 @@ export default function Header() {
 
           {/* Theme Toggle */}
           <div className="hidden md:flex items-center">
-            <button className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors duration-200">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
+              <button 
+                onClick={toggleTheme}
+                className={`p-2 rounded-lg transition-colors duration-200 hover:text-white hover:bg-gray-800 dark:hover:bg-gray-700 ${
+                  isDarkMode ? 'text-gray-400' : 'text-black'
+                }`}
+                title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+              {isDarkMode ? (
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
             </button>
           </div>
 
@@ -173,7 +189,9 @@ export default function Header() {
                       scrollToSection(item.href.substring(1));
                       setIsMenuOpen(false);
                     }}
-                    className="block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-colors duration-200 text-gray-300 hover:text-purple-400 hover:bg-gray-800"
+                    className={`block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] hover:bg-gray-800 ${
+                      isDarkMode ? 'text-gray-300' : 'text-black'
+                    }`}
                   >
                     {item.name}
                   </button>

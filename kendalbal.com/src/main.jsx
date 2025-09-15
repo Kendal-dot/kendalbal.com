@@ -4,9 +4,7 @@ import "./index.css";
 import HomePage from "./pages/HomePage.jsx";
 import Layout from "./pages/Layout.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
-
-// Set dark mode as default
-document.documentElement.classList.add('dark');
+import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,5 +18,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <ThemeProvider>
+    <RouterProvider router={router} />
+  </ThemeProvider>
 );

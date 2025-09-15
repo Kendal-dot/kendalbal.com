@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function HomePage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const { isDarkMode } = useTheme();
 
   const foodiSaveImages = [
     { src: "/foodisave/foodisave_startsida.png", title: "FoodiSave - Startsida" },
@@ -45,7 +47,11 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen relative z-0 bg-gray-950 text-white">
+    <div className={`min-h-screen relative z-0 font-inter transition-colors duration-300 ${
+      isDarkMode 
+        ? 'bg-gray-950 text-white' 
+        : 'bg-gray-50 text-gray-900'
+    }`}>
       {/* Inline CSS for effects (no external file needed) */}
       <style>{`
         .mouse-flashlight {
@@ -87,7 +93,7 @@ export default function HomePage() {
       />
 
       {/* Mouse flashlight effect */}
-      <div
+      <div 
         className="mouse-flashlight"
         style={{
           transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
@@ -106,7 +112,7 @@ export default function HomePage() {
               >
                 Hello, World! I'm
               </p>
-
+              
               <h1
                 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 animate-fade-in opacity-0"
                 style={{ animationDelay: "0.4s" }}
@@ -115,22 +121,26 @@ export default function HomePage() {
                   Kendal Bal
                 </span>
               </h1>
-
+              
               <h2
-                className="text-xl sm:text-2xl md:text-3xl text-zinc-300 mb-8 animate-fade-in opacity-0 font-normal"
+                className={`text-xl sm:text-2xl md:text-3xl mb-8 animate-fade-in opacity-0 font-normal ${
+                  isDarkMode ? 'text-zinc-300' : 'text-black'
+                }`}
                 style={{ animationDelay: "0.6s" }}
               >
                 AI Developer & Creative Problem Solver
               </h2>
-
+              
               <p
-                className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto lg:mx-0 mb-10 animate-fade-in opacity-0"
+                className={`text-base sm:text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-10 animate-fade-in opacity-0 ${
+                  isDarkMode ? 'text-zinc-400' : 'text-black'
+                }`}
                 style={{ animationDelay: "0.8s" }}
               >
                 I build systems that simplify complexity. Through automation, web development,
                 and AI, I make technology smarter and life easier.
               </p>
-
+              
               {/* Social Links */}
               <div
                 className="flex justify-center lg:justify-start gap-5 mb-10 animate-fade-in opacity-0"
@@ -138,9 +148,9 @@ export default function HomePage() {
               >
                 <a
                   href="https://github.com/kendal-dot"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-zinc-400 hover:text-indigo-400 transition-colors duration-200"
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                  className="text-zinc-400 hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300"
                   aria-label="GitHub"
                 >
                   {/* GitHub icon */}
@@ -151,9 +161,9 @@ export default function HomePage() {
 
                 <a
                   href="https://www.linkedin.com/in/kendal-bal-bb0841176/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-zinc-400 hover:text-indigo-400 transition-colors duration-200"
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                  className="text-zinc-400 hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300"
                   aria-label="LinkedIn"
                 >
                   {/* LinkedIn icon */}
@@ -166,9 +176,9 @@ export default function HomePage() {
 
                 <a
                   href="/Kendal_Bal_CV_en.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-zinc-400 hover:text-indigo-400 transition-colors duration-200 flex items-center gap-1.5"
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                  className="text-zinc-400 hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300 flex items-center gap-1.5"
                 >
                   {/* File icon */}
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -195,7 +205,7 @@ export default function HomePage() {
                     const isActive = index === currentImageIndex;
                     const isNext = index === (currentImageIndex + 1) % totalImages;
                     const isPrev = index === (currentImageIndex - 1 + totalImages) % totalImages;
-
+                    
                     let zIndex, transform, opacity, filter;
                     if (isActive) {
                       zIndex = 40;
@@ -232,8 +242,8 @@ export default function HomePage() {
                         }}
                       >
                         <div className="bg-gradient-to-br from-gray-800 to-gray-900 h-full rounded-xl relative overflow-hidden border border-gray-700 group">
-                          <img
-                            src={image.src}
+                          <img 
+                            src={image.src} 
                             alt={image.title}
                             className="w-full h-full object-cover rounded-xl"
                             loading="lazy"
@@ -249,7 +259,7 @@ export default function HomePage() {
                                     d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
                                     clipRule="evenodd"
                                   />
-                                </svg>
+                                  </svg>
                                 <span className="text-xs font-medium text-yellow-900">Featured Project</span>
                               </div>
                             </div>
@@ -286,7 +296,7 @@ export default function HomePage() {
                     <div className="w-6 h-6 border-2 border-purple-400/30 border-t-purple-400 rounded-full animate-spin"></div>
                   </div>
                 )}
-
+                    
                 {/* Progress Bar */}
                 <div className="absolute bottom-0 left-0 right-0 z-50">
                   <div className="h-1 bg-white/20 rounded-b-xl overflow-hidden">
@@ -347,9 +357,9 @@ export default function HomePage() {
                   </svg>
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
+                    </div>
+                  </div>
+                </div>
       </section>
 
       {/* About Section */}
@@ -363,10 +373,12 @@ export default function HomePage() {
               <div className="relative z-40">
                 <div className="rounded-2xl overflow-hidden shadow-xl">
                   <div className="p-2 bg-gradient-to-br from-purple-600 to-blue-500">
-                    <div className="bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden">
-                      <img
-                        src="/kendal_bal.jpg"
-                        alt="Kendal Bal - Profile Picture"
+                    <div className={`rounded-xl overflow-hidden ${
+                      isDarkMode ? 'bg-gray-800' : 'bg-white'
+                    }`}>
+                      <img 
+                        src="/kendal_bal.jpg" 
+                        alt="Kendal Bal - Profile Picture" 
                         className="w-full h-auto object-cover"
                         loading="lazy"
                       />
@@ -375,21 +387,23 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-
+            
             <div
               className="lg:w-3/5 animate-fade-in opacity-0"
               style={{ animationDelay: "0.3s" }}
             >
               <h2 className="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-3">
                 <span className="inline-block w-10 h-1 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"></span>
-                <span className="text-zinc-300">About Me</span>
+                 <span className={isDarkMode ? 'text-zinc-300' : 'text-black'}>About Me</span>
               </h2>
-
+              
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-gradient leading-tight">
                 Where Logic Meets Creativity
               </h3>
-
-              <div className="text-zinc-400 space-y-4 mb-10 text-lg leading-relaxed">
+              
+              <div className={`space-y-4 mb-10 text-lg leading-relaxed ${
+                isDarkMode ? 'text-zinc-400' : 'text-black'
+              }`}>
                 <p>
                   I'm a developer who enjoys the sweet spot between logic and creativity, where thoughtful code meets meaningful design.
                   I like architecting clear backends, shaping clean user flows, and exploring how AI can make products both
@@ -421,19 +435,23 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto mb-16 px-4">
             <div className="flex items-center gap-3 mb-6 justify-center">
               <span className="inline-block w-10 h-1 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"></span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-zinc-300">My Projects</h2>
+               <h2 className={`text-2xl sm:text-3xl font-bold ${
+                 isDarkMode ? 'text-zinc-300' : 'text-black'
+               }`}>My Projects</h2>
               <span className="inline-block w-10 h-1 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"></span>
             </div>
-
+            
             <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-gradient text-center leading-tight">
               Notable Projects
             </h3>
-
-            <p className="text-zinc-400 text-center max-w-2xl mx-auto">
+            
+            <p className={`text-center max-w-2xl mx-auto ${
+              isDarkMode ? 'text-zinc-400' : 'text-black'
+            }`}>
               Projects built with thoughtful code, clean structure, and a hint of creativity.
             </p>
           </div>
-
+          
           <div className="max-w-6xl mx-auto space-y-12">
             {[
               {
@@ -441,26 +459,32 @@ export default function HomePage() {
                 title: "Foodisave",
                 description:
                   "AI-Powered Recipe Management Platform. A full-stack web application that helps reduce food waste by suggesting recipes based on ingredient detection from images, featuring AI-powered recipe generation, smart shopping list creation, and a chatbot for recipe questions.",
-                technologies: ["Python", "JavaScript", "React", "Tailwind CSS", "PostgreSQL"],
+                technologies: ["Python", "FastAPI", "JavaScript", "React", "Tailwind CSS", "PostgreSQL", "Pydantic",],
                 featured: true,
+                githubUrl: "https://github.com/Kendal-dot/foodisave",
+                liveUrl: "https://www.foodisave.se",
               },
               {
                 id: 2,
-                title: "Mental Health Dashboard",
+                title: "RaceBuddy",
                 description:
-                  "Interactive data visualization tool analyzing mental health trends across demographics using Streamlit and Plotly.",
-                technologies: ["Python", "Pandas", "Streamlit", "Plotly", "Data Analysis"],
+                  "AI-driven training platform with multi-agent system and vector database for The Swedish Classic Races, designed to generate personalized .ics training schedules to help users achieve their goals.",
+                technologies: ["Python", "FastAPI", "JavaScript", "React", "Tailwind CSS", "PostgreSQL", "Pydantic", "LangChain / LangGraph", "ChromaDB", "Pandas / NumPy"],
+                githubUrl: "https://github.com/Kendal-dot/racebuddy",
+                liveUrl: "#",
               },
               {
                 id: 3,
-                title: "AI Chat Assistant",
+                title: "Multimodal Search Engine",
                 description:
-                  "Intelligent chatbot with natural language processing capabilities for customer support automation.",
-                technologies: ["Python", "TensorFlow", "React", "Node.js", "NLP"],
+                  "This project applies embeddings, RAG, and multimodality to enable cross-modal search on the Flickr8k dataset, allowing retrieval of images from text queries and text from image queries.",
+                technologies: ["Python", "Streamlit", "PyTorch", "Hugging Face Transformers", "CLIP (ViT-B/32)", "Scikit-learn", "Pandas / NumPy", "Matplotlib"],
+                githubUrl: "https://github.com/Kendal-dot/search_engine",
+                liveUrl: "#",
               },
             ].map((project, index) => (
-              <div
-                key={project.id}
+              <div 
+                key={project.id} 
                 className="group relative flex flex-row gap-8 items-start"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -472,15 +496,27 @@ export default function HomePage() {
                       alt={project.title}
                       className="w-full h-full object-cover rounded-xl"
                     />
+                  ) : project.id === 2 ? (
+                    <img 
+                      src="/racebuddy.png" 
+                      alt={project.title}
+                      className="w-full h-full object-cover rounded-xl"
+                    />
+                  ) : project.id === 3 ? (
+                    <img 
+                      src="/multimodal_search_engine.png" 
+                      alt={project.title}
+                      className="w-full h-full object-cover rounded-xl"
+                    />
                   ) : (
                     <div className="bg-gradient-to-br from-purple-600 to-blue-500 w-full h-full flex items-center justify-center rounded-xl">
-                      <div className="text-white text-center">
-                        <h4 className="text-xl font-bold">{project.title}</h4>
+                  <div className="text-white text-center">
+                    <h4 className="text-xl font-bold">{project.title}</h4>
                         {project.status && <p className="text-sm text-purple-100 mt-1">{project.status}</p>}
                       </div>
                     </div>
-                  )}
-
+                    )}
+                  
                   {project.featured && (
                     <div className="absolute top-0 left-0 px-2 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-yellow-900 text-xs font-medium rounded-md flex items-center gap-1 shadow-sm">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
@@ -497,12 +533,16 @@ export default function HomePage() {
 
                 {/* Project Content */}
                 <div className="flex-1">
-                  <h3 className="text-3xl font-bold text-white mb-4">{project.title}</h3>
-                  <p className="text-gray-400 mb-6 text-lg leading-relaxed">{project.description}</p>
+                  <h3 className={`text-3xl font-bold mb-4 ${
+                    isDarkMode ? 'text-white' : 'text-black'
+                  }`}>{project.title}</h3>
+                  <p className={`mb-6 text-lg leading-relaxed ${
+                    isDarkMode ? 'text-gray-400' : 'text-black'
+                  }`}>{project.description}</p>
 
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.technologies.map((tech) => (
-                      <span
+                      <span 
                         key={tech}
                         className="px-3 py-1 text-xs font-medium rounded-md border border-purple-400/30 bg-transparent text-purple-400 shadow-[0_0_8px_rgba(147,51,234,0.6)]"
                       >
@@ -513,7 +553,7 @@ export default function HomePage() {
 
                   <div className="flex gap-3">
                     <a 
-                      href="https://github.com/Kendal-dot/foodisave" 
+                      href={project.githubUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md bg-gray-700 text-gray-200 hover:bg-gray-600 transition-colors duration-300"
@@ -525,7 +565,7 @@ export default function HomePage() {
                     </a>
 
                     <a 
-                      href="https://www.foodisave.se" 
+                      href={project.liveUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md bg-purple-600 text-white hover:bg-purple-700 transition-colors duration-300"
@@ -538,7 +578,7 @@ export default function HomePage() {
                         stroke="currentColor"
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-                      </svg>
+                </svg>
                       Live Demo
                     </a>
                   </div>
@@ -555,13 +595,17 @@ export default function HomePage() {
           <div className="text-center mb-16 animate-fade-in opacity-0 px-4">
             <div className="flex items-center gap-3 mb-6 justify-center">
               <span className="inline-block w-10 h-1 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"></span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-zinc-300">My Skills</h2>
+               <h2 className={`text-2xl sm:text-3xl font-bold ${
+                 isDarkMode ? 'text-zinc-300' : 'text-black'
+               }`}>My Skills</h2>
               <span className="inline-block w-10 h-1 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"></span>
             </div>
-
+            
             <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-gradient">Skills & Tools</h3>
-
-            <p className="text-zinc-400 text-center mb-12 max-w-2xl mx-auto">
+            
+            <p className={`text-center mb-12 max-w-2xl mx-auto ${
+              isDarkMode ? 'text-zinc-400' : 'text-black'
+            }`}>
               Here's what I've been working with lately. These are the tools and technologies I use to build full-stack applications,
               automate workflows, and explore AI.
             </p>
@@ -574,7 +618,7 @@ export default function HomePage() {
                 skills: ["Python", "JavaScript", "React", "Tailwind CSS", "FastAPI"],
               },
               {
-                title: "Database & Data Analysis",
+                title: "Database & Data Analysis", 
                 skills: ["PostgreSQL", "SQLAlchemy", "Alembic", "Pandas / NumPy", "Database Design"],
               },
               {
@@ -586,15 +630,19 @@ export default function HomePage() {
                 skills: ["PyTorch", "Scikit-learn", "Matplotlib / Seaborn", "Hugging Face", "Generative AI (RAG / LLMs)"],
               },
             ].map((category, index) => (
-              <div
+              <div 
                 key={category.title}
-                className="bg-gray-900/90 rounded-2xl p-5 border border-gray-700 shadow-sm hover:shadow-xl transition-all duration-300 animate-fade-in opacity-0 relative z-40"
+                className={`rounded-2xl p-5 border shadow-sm hover:shadow-xl transition-all duration-300 animate-fade-in opacity-0 relative z-40 ${
+                  isDarkMode 
+                    ? 'bg-gray-900/90 border-gray-700' 
+                    : 'bg-white/90 border-gray-200'
+                }`}
                 style={{ animationDelay: `${(index + 1) * 0.1}s` }}
               >
                 <h4 className="text-lg font-bold mb-3 bg-gradient-to-r from-indigo-400 to-indigo-500 bg-clip-text text-transparent">
                   {category.title}
                 </h4>
-
+                
                 <ul className="space-y-2.5">
                   {category.skills.map((skill) => (
                     <li key={skill} className="flex items-start gap-2">
@@ -610,8 +658,10 @@ export default function HomePage() {
                       >
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="m9 12 2 2 4-4"></path>
-                      </svg>
-                      <span className="text-gray-300 text-sm">{skill}</span>
+                </svg>
+                      <span className={`text-sm ${
+                        isDarkMode ? 'text-gray-300' : 'text-black'
+                      }`}>{skill}</span>
                     </li>
                   ))}
                 </ul>
@@ -627,79 +677,71 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <div className="flex items-center gap-3 mb-6 justify-center">
               <span className="inline-block w-10 h-1 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"></span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-zinc-300">Contact Me</h2>
+               <h2 className={`text-2xl sm:text-3xl font-bold ${
+                 isDarkMode ? 'text-zinc-300' : 'text-black'
+               }`}>Contact Me</h2>
               <span className="inline-block w-10 h-1 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"></span>
             </div>
-
+            
             <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 text-gradient leading-tight">
               Let's Work Together
             </h3>
-
-            <p className="text-zinc-400 max-w-2xl mx-auto mb-8">
+            
+            <p className={`max-w-2xl mx-auto mb-8 ${
+              isDarkMode ? 'text-zinc-400' : 'text-black'
+            }`}>
               Have a project in mind, something you want to build together, or simply want to connect? Feel free to reach out! I'm always open to a good conversation.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="grid gap-6">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="mb-12">
+              <a
+                href="mailto:kendal.bal@icloud.com"
+                className="inline-flex items-center justify-center px-12 py-3 text-white bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg hover:from-purple-700 hover:to-blue-600 transition-all duration-200 font-medium"
+              >
+                Say Hello!
+              </a>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-md mx-auto">
                 {[
                   {
                     icon: (
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     ),
                     title: "Email",
-                    detail: "nabilelbajdii@gmail.com",
-                    link: "mailto:nabilelbajdii@gmail.com",
+                  detail: "kendal.bal@icloud.com",
                   },
                   {
                     icon: (
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                </svg>
                     ),
                     title: "Location",
-                    detail: "Stockholm, Sweden",
-                  },
-                ].map((item) => (
-                  <div key={item.title} className="flex items-start gap-4 p-4 bg-gray-800/50 rounded-xl">
-                    <div className="flex-shrink-0 w-12 h-12 bg-indigo-900/30 rounded-lg flex items-center justify-center text-indigo-400">
+                  detail: "Stockholm, Sweden",
+                },
+              ].map((item) => (
+                <div key={item.title} className="text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className={`w-16 h-16 flex items-center justify-center rounded-full ${
+                     isDarkMode 
+                       ? 'bg-gray-800 text-gray-400' 
+                       : 'bg-gray-200 text-gray-800'
+                   }`}>
                       {item.icon}
                     </div>
-                    <div>
-                      <h5 className="font-semibold text-white mb-1">{item.title}</h5>
-                      {item.link ? (
-                        <a href={item.link} className="text-gray-300 hover:text-indigo-400 transition-colors duration-200">
-                          {item.detail}
-                        </a>
-                      ) : (
-                        <p className="text-gray-300">{item.detail}</p>
-                      )}
                     </div>
+                  <h4 className={`text-lg font-semibold mb-2 ${
+                    isDarkMode ? 'text-white' : 'text-gray-900'
+                  }`}>{item.title}</h4>
+                  <p className={isDarkMode ? 'text-gray-400' : 'text-gray-800'}>{item.detail}</p>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700">
-                <h4 className="text-2xl font-bold text-white mb-6">Ready to start a conversation?</h4>
-                <p className="text-gray-300 mb-8">
-                  I'm currently available for freelance work and open to discussing new opportunities. Whether you have a project in mind or just want to connect, I'd love to hear from you.
-                </p>
-                <a
-                  href="mailto:nabilelbajdii@gmail.com"
-                  className="inline-flex items-center justify-center px-8 py-4 text-white bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg hover:from-purple-700 hover:to-blue-600 transition-all duration-200 font-medium"
-                >
-                  Say Hello!
-                  <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
-                </a>
-              </div>
             </div>
           </div>
         </div>

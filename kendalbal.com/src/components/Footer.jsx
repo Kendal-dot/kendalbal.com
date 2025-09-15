@@ -1,7 +1,10 @@
 import React from "react";
+import { useTheme } from "../contexts/ThemeContext";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
+  const { isDarkMode } = useTheme();
+  
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -40,69 +43,18 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-950 border-t border-gray-800">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          {/* Back to top button */}
-          <button
-            onClick={scrollToTop}
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-200 mb-4 md:mb-0"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
-            </svg>
-            <span>Back to top</span>
-          </button>
-
-          {/* Copyright */}
+    <footer className={`font-inter transition-colors duration-300 ${
+      isDarkMode ? 'bg-gray-950' : 'bg-white'
+    }`}>
+      <div className="container mx-auto px-4 py-12 pb-16">
           <div className="text-center">
-            <p className="text-gray-600 dark:text-gray-400 mb-2 md:mb-0">
-              © 2024 Kendal Bal. All rights reserved.
-            </p>
-          </div>
-
-          {/* Social links */}
-          <div className="flex space-x-4">
-            {socialLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-200"
-                aria-label={item.name}
-              >
-                {item.icon}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Additional footer links */}
-        <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
-          <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8">
-            <Link 
-              to="/about" 
-              className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-200"
-            >
-              About
-            </Link>
-            <Link 
-              to="/projects" 
-              className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-200"
-            >
-              Projects
-            </Link>
-            <Link 
-              to="/contact" 
-              className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-200"
-            >
-              Contact
-            </Link>
-            <span className="text-sm text-gray-500 dark:text-gray-500">
-              Built with React & Tailwind CSS
-            </span>
-          </div>
+          <p className={`text-sm leading-relaxed max-w-4xl mx-auto tracking-wide ${
+            isDarkMode ? 'text-gray-400' : 'text-gray-800'
+          }`}>
+            Built in <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-800'}`}>Visual Studio Code</a> with a focus on quality and ❤️<br />
+            Powered by <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-800'}`}>React</a>, <a href="https://vite.dev/" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-800'}`}>Vite</a>, and <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-800'}`}>Tailwind</a>, and deployed with <a href="https://vercel.com/" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-800'}`}>Vercel</a>.<br />
+            Set in the <a href="https://rsms.me/inter/" target="_blank" rel="noopener noreferrer" className={`font-bold hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-800'}`}>Inter</a> typeface, because it simply looks right.
+          </p>
         </div>
       </div>
     </footer>
