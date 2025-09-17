@@ -477,7 +477,7 @@ export default function HomePage() {
                 id: 3,
                 title: "Multimodal Search Engine",
                 description:
-                  "This project applies embeddings, RAG, and multimodality to enable cross-modal search on the Flickr8k dataset, allowing retrieval of images from text queries and text from image queries.",
+                  "This project applies multimodal embeddings with OpenAI's CLIP to enable cross-modal search on the Flickr8k dataset. Users can retrieve images from text queries and captions from uploaded images through a Streamlit interface powered by Hugging Face Transformers.",
                 technologies: ["Python", "Streamlit", "PyTorch", "Hugging Face Transformers", "CLIP (ViT-B/32)", "Scikit-learn", "Pandas / NumPy", "Matplotlib"],
                 githubUrl: "https://github.com/Kendal-dot/search_engine",
                 liveUrl: "#",
