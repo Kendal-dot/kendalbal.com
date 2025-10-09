@@ -1,20 +1,16 @@
 {
-    "redirects": [
+    "headers": [
       {
-        "source": "http://kendalbal.com/:path*",
-        "destination": "https://kendalbal.com/:path*",
-        "permanent": true
-      },
-      {
-        "source": "http://www.kendalbal.com/:path*",
-        "destination": "https://kendalbal.com/:path*",
-        "permanent": true
-      },
-      {
-        "source": "https://www.kendalbal.com/:path*",
-        "destination": "https://kendalbal.com/:path*",
-        "permanent": true
+        "source": "/(.*)",
+        "headers": [
+          { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" }
+        ]
       }
+    ],
+    "redirects": [
+      { "source": "http://kendalbal.com/:path*", "destination": "https://kendalbal.com/:path*", "permanent": true },
+      { "source": "http://www.kendalbal.com/:path*", "destination": "https://kendalbal.com/:path*", "permanent": true },
+      { "source": "https://www.kendalbal.com/:path*", "destination": "https://kendalbal.com/:path*", "permanent": true }
     ]
   }
   
