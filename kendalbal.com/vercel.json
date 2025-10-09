@@ -1,0 +1,20 @@
+{
+    "redirects": [
+      {
+        "source": "http://kendalbal.com/:path*",
+        "destination": "https://kendalbal.com/:path*",
+        "permanent": true
+      },
+      {
+        "source": "http://www.kendalbal.com/:path*",
+        "destination": "https://kendalbal.com/:path*",
+        "permanent": true
+      },
+      {
+        "source": "https://www.kendalbal.com/:path*",
+        "destination": "https://kendalbal.com/:path*",
+        "permanent": true
+      }
+    ]
+  }
+  
