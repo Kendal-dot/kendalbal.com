@@ -2,14 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/K_1.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Kendal Bal - AI Developer Portfolio showcasing projects and skills in AI development and software development" />
-    <meta name="theme-color" content="#7c3aed" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
     <title>Kendal Bal | AI Developer & Problem Solver</title>
+    <meta
+      name="description"
+      content="Kendal Bal – AI Developer Portfolio showcasing projects and skills in AI development and software development."
+    />
+    <meta name="theme-color" content="#7c3aed" />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://kendalbal.com/" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Kendal Bal Portfolio" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Preload LCP image -->
     <link rel="preload" as="image" href="/kendal_bal.jpg" fetchpriority="high" />
@@ -27,6 +43,11 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
+    <!-- (Optional) Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kendal Bal | AI Developer & Creative Problem Solver" />
+    <meta name="twitter:description" content="I build systems that simplify complexity. Through automation, web development, and AI, I make technology smarter and life easier." />
+    <meta name="twitter:image" content="https://kendalbal.com/open_graph_kendal.png" />
 
     <!-- JSON-LD: Person -->
     <script type="application/ld+json">
@@ -44,28 +65,32 @@
     }
     </script>
 
+    <!-- JSON-LD: SoftwareSourceCode (FoodiSave) -->
     <script type="application/ld+json">
-      {
-        "@context":"https://schema.org",
-        "@type":"SoftwareSourceCode",
-        "name":"FoodiSave",
-        "codeRepository":"https://github.com/Kendal-dot/foodisave",
-        "programmingLanguage":["Python","JavaScript"],
-        "runtimePlatform":["FastAPI","React"],
-        "url":"https://www.foodisave.se",
-        "author":{
-          "@type":"Person",
-          "name":"Kendal Bal",
-          "url":"https://kendalbal.com/"
-        }
+    {
+      "@context":"https://schema.org",
+      "@type":"SoftwareSourceCode",
+      "name":"FoodiSave",
+      "description":"AI-driven recipe platform that reduces food waste with image ingredient detection, recipe generation, and smart shopping lists.",
+      "codeRepository":"https://github.com/Kendal-dot/foodisave",
+      "programmingLanguage":["Python","JavaScript"],
+      "runtimePlatform":["FastAPI","React"],
+      "url":"https://www.foodisave.se",
+      "author":{
+        "@type":"Person",
+        "name":"Kendal Bal",
+        "url":"https://kendalbal.com/"
       }
-      </script>
-      
+    }
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="root"></div>
