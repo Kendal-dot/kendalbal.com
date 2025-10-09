@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 
 export default function HomePage() {
@@ -9,10 +9,10 @@ export default function HomePage() {
   const { isDarkMode } = useTheme();
 
   const foodiSaveImages = [
-    { src: "/foodisave/foodisave_startsida.png", title: "FoodiSave - Startsida" },
-    { src: "/foodisave/foodisave_minarecept.png", title: "FoodiSave - Mina Recept" },
-    { src: "/foodisave/foodisave_digitalakocken.png", title: "FoodiSave - Digitala Kocken" },
-    { src: "/foodisave/foodisave_provagratis.png", title: "FoodiSave - Prova Gratis" }
+    { src: "/foodisave/foodisave_startsida.png", title: "FoodiSave - Startsida", width: 1200, height: 800 },
+    { src: "/foodisave/foodisave_minarecept.png", title: "FoodiSave - Mina Recept", width: 1200, height: 800 },
+    { src: "/foodisave/foodisave_digitalakocken.png", title: "FoodiSave - Digitala Kocken", width: 1200, height: 800 },
+    { src: "/foodisave/foodisave_provagratis.png", title: "FoodiSave - Prova Gratis", width: 1200, height: 800 }
   ];
   const totalImages = foodiSaveImages.length;
 
@@ -45,6 +45,60 @@ export default function HomePage() {
     const timer = setTimeout(() => setIsLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
+
+  // Project data (reused both for UI and JSON-LD)
+  const projectsData = [
+    {
+      id: 1,
+      title: "Foodisave",
+      description:
+        "AI-Powered Recipe Management Platform. A full-stack web application that helps reduce food waste by suggesting recipes based on ingredient detection from images, featuring AI-powered recipe generation, smart shopping list creation, and a chatbot for recipe questions.",
+      technologies: ["Python", "FastAPI", "JavaScript", "React", "Tailwind CSS", "PostgreSQL", "Pydantic"],
+      featured: true,
+      githubUrl: "https://github.com/Kendal-dot/foodisave",
+      liveUrl: "https://www.foodisave.se",
+      image: { src: "/foodisave/foodisave_startsida.png", width: 1200, height: 800 }
+    },
+    {
+      id: 2,
+      title: "RaceBuddy",
+      description:
+        "AI-driven training platform with multi-agent system and vector database for The Swedish Classic Races, designed to generate personalized .ics training schedules to help users achieve their goals.",
+      technologies: ["Python", "FastAPI", "JavaScript", "React", "Tailwind CSS", "PostgreSQL", "Pydantic", "LangChain / LangGraph", "ChromaDB", "Pandas / NumPy"],
+      githubUrl: "https://github.com/Kendal-dot/racebuddy",
+      liveUrl: "#",
+      image: { src: "/racebuddy.png", width: 1000, height: 625 }
+    },
+    {
+      id: 3,
+      title: "Multimodal Search Engine",
+      description:
+        "This project applies multimodal embeddings with OpenAI's CLIP to enable cross-modal search on the Flickr8k dataset. Users can retrieve images from text queries and captions from uploaded images through a Streamlit interface powered by Hugging Face Transformers.",
+      technologies: ["Python", "Streamlit", "PyTorch", "Hugging Face Transformers", "CLIP (ViT-B/32)", "Scikit-learn", "Pandas / NumPy", "Matplotlib"],
+      githubUrl: "https://github.com/Kendal-dot/search_engine",
+      liveUrl: "#",
+      image: { src: "/multimodal_search_engine.png", width: 1200, height: 750 }
+    }
+  ];
+
+  // JSON-LD for projects (SoftwareSourceCode) to help Google understand your work
+  const projectsJsonLd = useMemo(() => {
+    const graph = projectsData.map((p) => {
+      const langs = ["Python", "JavaScript"].filter((lang) =>
+        p.technologies.join(" ").toLowerCase().includes(lang.toLowerCase())
+      );
+      return {
+        "@type": "SoftwareSourceCode",
+        "name": p.title,
+        "description": p.description,
+        "codeRepository": p.githubUrl,
+        "url": p.liveUrl !== "#" ? p.liveUrl : p.githubUrl,
+        "programmingLanguage": langs.length ? langs : p.technologies.slice(0, 3),
+        "applicationCategory": "WebApplication"
+      };
+    });
+    return JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+  }, [projectsData]);
 
   return (
     <div className={`min-h-screen relative z-0 font-inter transition-colors duration-300 ${
@@ -101,7 +155,7 @@ export default function HomePage() {
       />
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center pt-16 relative overflow-hidden">
+      <section id="hero" className="min-h-screen flex items-center pt-16 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
             {/* Text Content */}
@@ -154,7 +208,7 @@ export default function HomePage() {
                   aria-label="GitHub"
                 >
                   {/* GitHub icon */}
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" className="w-6 h-6 fill-current">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" className="w-6 h-6 fill-current" aria-hidden="true">
                     <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z" />
                   </svg>
                 </a>
@@ -167,7 +221,7 @@ export default function HomePage() {
                   aria-label="LinkedIn"
                 >
                   {/* LinkedIn icon */}
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-6 h-6 fill-current">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-6 h-6 fill-current" aria-hidden="true">
                     <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
                   </svg>
                 </a>
@@ -181,7 +235,7 @@ export default function HomePage() {
                   className="text-zinc-400 hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-300 flex items-center gap-1.5"
                 >
                   {/* File icon */}
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6" aria-hidden="true">
                     <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z" />
                     <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
                   </svg>
@@ -246,6 +300,9 @@ export default function HomePage() {
                             src={image.src} 
                             alt={image.title}
                             className="w-full h-full object-cover rounded-xl"
+                            width={image.width}
+                            height={image.height}
+                            decoding="async"
                             loading="lazy"
                           />
 
@@ -253,7 +310,7 @@ export default function HomePage() {
                           {isActive && (
                             <div className="absolute top-0 right-0 z-50">
                               <div className="px-2 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-yellow-900 text-xs font-medium rounded-md flex items-center gap-1 shadow-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3" aria-hidden="true">
                                   <path
                                     fillRule="evenodd"
                                     d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
@@ -279,6 +336,7 @@ export default function HomePage() {
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
+                                aria-hidden="true"
                               >
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                               </svg>
@@ -320,7 +378,7 @@ export default function HomePage() {
                   className="p-1 text-gray-400 hover:text-white transition-colors duration-200"
                   aria-label="Previous image"
                 >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
@@ -352,7 +410,7 @@ export default function HomePage() {
                   className="p-1 text-gray-400 hover:text-white transition-colors duration-200"
                   aria-label="Next image"
                 >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -380,6 +438,9 @@ export default function HomePage() {
                         src="/kendal_bal.jpg" 
                         alt="Kendal Bal - Profile Picture" 
                         className="w-full h-auto object-cover"
+                        width="640"
+                        height="800"
+                        decoding="async"
                         loading="lazy"
                       />
                     </div>
@@ -453,36 +514,7 @@ export default function HomePage() {
           </div>
           
           <div className="max-w-6xl mx-auto space-y-12">
-            {[
-              {
-                id: 1,
-                title: "Foodisave",
-                description:
-                  "AI-Powered Recipe Management Platform. A full-stack web application that helps reduce food waste by suggesting recipes based on ingredient detection from images, featuring AI-powered recipe generation, smart shopping list creation, and a chatbot for recipe questions.",
-                technologies: ["Python", "FastAPI", "JavaScript", "React", "Tailwind CSS", "PostgreSQL", "Pydantic",],
-                featured: true,
-                githubUrl: "https://github.com/Kendal-dot/foodisave",
-                liveUrl: "https://www.foodisave.se",
-              },
-              {
-                id: 2,
-                title: "RaceBuddy",
-                description:
-                  "AI-driven training platform with multi-agent system and vector database for The Swedish Classic Races, designed to generate personalized .ics training schedules to help users achieve their goals.",
-                technologies: ["Python", "FastAPI", "JavaScript", "React", "Tailwind CSS", "PostgreSQL", "Pydantic", "LangChain / LangGraph", "ChromaDB", "Pandas / NumPy"],
-                githubUrl: "https://github.com/Kendal-dot/racebuddy",
-                liveUrl: "#",
-              },
-              {
-                id: 3,
-                title: "Multimodal Search Engine",
-                description:
-                  "This project applies multimodal embeddings with OpenAI's CLIP to enable cross-modal search on the Flickr8k dataset. Users can retrieve images from text queries and captions from uploaded images through a Streamlit interface powered by Hugging Face Transformers.",
-                technologies: ["Python", "Streamlit", "PyTorch", "Hugging Face Transformers", "CLIP (ViT-B/32)", "Scikit-learn", "Pandas / NumPy", "Matplotlib"],
-                githubUrl: "https://github.com/Kendal-dot/search_engine",
-                liveUrl: "#",
-              },
-            ].map((project, index) => (
+            {projectsData.map((project, index) => (
               <div 
                 key={project.id} 
                 className="group relative flex flex-col md:flex-row gap-8 md:items-start"
@@ -492,34 +524,46 @@ export default function HomePage() {
                 <div className="relative w-full max-w-md mx-auto md:w-80 md:mx-0 h-48 overflow-hidden rounded-xl md:flex-shrink-0">
                   {project.id === 1 ? (
                     <img 
-                      src="/foodisave/foodisave_startsida.png" 
+                      src={project.image.src}
                       alt={project.title}
                       className="w-full h-full object-cover rounded-xl"
+                      width={project.image.width}
+                      height={project.image.height}
+                      decoding="async"
+                      loading="lazy"
                     />
                   ) : project.id === 2 ? (
                     <img 
-                      src="/racebuddy.png" 
+                      src={project.image.src}
                       alt={project.title}
                       className="w-full h-full object-cover rounded-xl"
+                      width={project.image.width}
+                      height={project.image.height}
+                      decoding="async"
+                      loading="lazy"
                     />
                   ) : project.id === 3 ? (
                     <img 
-                      src="/multimodal_search_engine.png" 
+                      src={project.image.src}
                       alt={project.title}
                       className="w-full h-full object-cover rounded-xl"
+                      width={project.image.width}
+                      height={project.image.height}
+                      decoding="async"
+                      loading="lazy"
                     />
                   ) : (
                     <div className="bg-gradient-to-br from-purple-600 to-blue-500 w-full h-full flex items-center justify-center rounded-xl">
-                  <div className="text-white text-center">
-                    <h4 className="text-xl font-bold">{project.title}</h4>
+                      <div className="text-white text-center">
+                        <h4 className="text-xl font-bold">{project.title}</h4>
                         {project.status && <p className="text-sm text-purple-100 mt-1">{project.status}</p>}
                       </div>
                     </div>
-                    )}
+                  )}
                   
                   {project.featured && (
                     <div className="absolute top-0 left-0 px-2 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-yellow-900 text-xs font-medium rounded-md flex items-center gap-1 shadow-sm">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3" aria-hidden="true">
                         <path
                           fillRule="evenodd"
                           d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
@@ -544,7 +588,7 @@ export default function HomePage() {
                         rel="noopener noreferrer" 
                         className="inline-flex items-center gap-1 p-2 sm:px-3 sm:py-1 text-xs font-medium rounded-full sm:rounded-md bg-gray-700 text-gray-200 hover:bg-gray-600 transition-colors duration-300"
                       >
-                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                         </svg>
                         <span className="hidden sm:inline">Code</span>
@@ -555,7 +599,7 @@ export default function HomePage() {
                         rel="noopener noreferrer" 
                         className="inline-flex items-center gap-1 p-2 sm:px-3 sm:py-1 text-xs font-medium rounded-full sm:rounded-md bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600 transition-colors duration-300"
                       >
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
                         <span className="hidden sm:inline">Live Demo</span>
@@ -649,6 +693,7 @@ export default function HomePage() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
+                        aria-hidden="true"
                       >
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="m9 12 2 2 4-4"></path>
@@ -702,7 +747,7 @@ export default function HomePage() {
                 {[
                   {
                     icon: (
-                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     ),
@@ -711,7 +756,7 @@ export default function HomePage() {
                   },
                   {
                     icon: (
-                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -740,6 +785,12 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* JSON-LD to help search engines understand your projects */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: projectsJsonLd }}
+      />
     </div>
   );
 }

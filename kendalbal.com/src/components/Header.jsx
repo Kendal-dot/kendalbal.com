@@ -18,10 +18,10 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       // Set scrolled state for background blur effect
       setScrolled(currentScrollY > 50);
-      
+
       // Header visibility logic
       if (currentScrollY < 100) {
         // Always show header at top of page
@@ -36,7 +36,7 @@ export default function Header() {
           setHeaderVisible(true);
         }
       }
-      
+
       setLastScrollY(currentScrollY);
     };
 
@@ -69,10 +69,10 @@ export default function Header() {
   }, []);
 
   const navigation = [
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Contact', href: '#contact' },
+    { name: "About", href: "#about" },
+    { name: "Projects", href: "#projects" },
+    { name: "Skills", href: "#skills" },
+    { name: "Contact", href: "#contact" },
   ];
 
   const scrollToSection = (sectionId) => {
@@ -80,70 +80,104 @@ export default function Header() {
     if (element) {
       const headerHeight = 80; // Approximate header height
       const elementPosition = element.offsetTop - headerHeight;
-      
+
       // Always show header when navigating
       setHeaderVisible(true);
-      
+
       window.scrollTo({
         top: elementPosition,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
+    }
+  };
+
+  // Handler to use on <a> so we keep real links for crawl + smooth scroll UX
+  const onAnchorClick = (e, hash) => {
+    // If it's a hash to an element on this page, smooth scroll and prevent default jump
+    if (hash?.startsWith("#")) {
+      e.preventDefault();
+      scrollToSection(hash.substring(1));
     }
   };
 
   return (
     <>
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${
-        scrolled ? 'bg-white/90 backdrop-blur-md shadow-lg dark:bg-gray-900/90' : 'bg-transparent'
-      } ${headerVisible || isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
+      <header
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${
+          scrolled
+            ? "bg-white/90 backdrop-blur-md shadow-lg dark:bg-gray-900/90"
+            : "bg-transparent"
+        } ${headerVisible || isMenuOpen ? "translate-y-0" : "-translate-y-full"}`}
+      >
         <div className="container mx-auto flex items-center px-4 sm:px-6 lg:px-8 py-6">
           {/* Logo */}
           <div className="flex items-center">
-            <button onClick={() => scrollToSection('hero')} className="flex items-center">
+            <a
+              href="#hero"
+              onClick={(e) => onAnchorClick(e, "#hero")}
+              className="flex items-center"
+              aria-label="Go to top / Hero"
+            >
               <div className="w-12 h-12 rounded-lg overflow-hidden mr-3">
-                <img 
-                  src="/K_1.png" 
-                  alt="Kendal Bal Logo" 
+                <img
+                  src="/K_1.png"
+                  alt="Kendal Bal Logo"
                   className="w-full h-full object-cover"
                 />
               </div>
-            </button>
+            </a>
           </div>
 
           {/* Spacer to push navigation to the right */}
           <div className="flex-1"></div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8 mr-4">
+          <nav
+            role="navigation"
+            aria-label="Main"
+            className="hidden md:flex items-center space-x-8 mr-4"
+          >
             {navigation.map((item) => (
-              <button
+              <a
                 key={item.name}
-                onClick={() => scrollToSection(item.href.substring(1))}
+                href={item.href}
+                onClick={(e) => onAnchorClick(e, item.href)}
                 className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] ${
-                  isDarkMode ? 'text-gray-300' : 'text-black'
+                  isDarkMode ? "text-gray-300" : "text-black"
                 }`}
+                aria-label={item.name}
               >
                 {item.name}
-              </button>
+              </a>
             ))}
           </nav>
 
           {/* Theme Toggle */}
           <div className="hidden md:flex items-center">
-              <button 
-                onClick={toggleTheme}
-                className={`p-2 rounded-lg transition-colors duration-200 hover:text-white hover:bg-gray-800 dark:hover:bg-gray-700 ${
-                  isDarkMode ? 'text-gray-400' : 'text-black'
-                }`}
-                title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
+            <button
+              onClick={toggleTheme}
+              className={`p-2 rounded-lg transition-colors duration-200 hover:text-white hover:bg-gray-800 dark:hover:bg-gray-700 ${
+                isDarkMode ? "text-gray-400" : "text-black"
+              }`}
+              title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
               {isDarkMode ? (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
                 </svg>
               ) : (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                  />
                 </svg>
               )}
             </button>
@@ -151,20 +185,30 @@ export default function Header() {
 
           {/* Mobile Theme Toggle */}
           <div className="md:hidden ml-4">
-            <button 
+            <button
               onClick={toggleTheme}
               className={`p-2 rounded-lg transition-colors duration-200 hover:text-white hover:bg-gray-800 dark:hover:bg-gray-700 ${
-                isDarkMode ? 'text-gray-400' : 'text-black'
+                isDarkMode ? "text-gray-400" : "text-black"
               }`}
-              title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {isDarkMode ? (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
                 </svg>
               ) : (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                  />
                 </svg>
               )}
             </button>
@@ -176,6 +220,9 @@ export default function Header() {
               id="menu-burger"
               onClick={toggleMenu}
               className="relative flex items-center justify-center w-10 h-10 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-200"
+              aria-expanded={isMenuOpen}
+              aria-controls="sideMenu"
+              aria-label="Toggle menu"
             >
               {isMenuOpen ? (
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -198,24 +245,25 @@ export default function Header() {
           <div
             id="sideMenu"
             className={`absolute right-0 top-0 h-full w-64 bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out ${
-              isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+              isMenuOpen ? "translate-x-0" : "translate-x-full"
             }`}
           >
             <div className="flex flex-col h-full pt-20 pb-6 px-6">
-              <nav className="flex-1 space-y-4">
+              <nav className="flex-1 space-y-4" role="navigation" aria-label="Mobile">
                 {navigation.map((item) => (
-                  <button
+                  <a
                     key={item.name}
-                    onClick={() => {
-                      scrollToSection(item.href.substring(1));
+                    href={item.href}
+                    onClick={(e) => {
+                      onAnchorClick(e, item.href);
                       setIsMenuOpen(false);
                     }}
-                    className={`block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] hover:bg-gray-800 ${
-                      isDarkMode ? 'text-gray-300' : 'text-black'
+                    className={`block w-full px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 hover:text-purple-400 hover:text-shadow-[0_0_8px_rgba(168,85,247,0.8)] hover:bg-gray-800 ${
+                      isDarkMode ? "text-gray-300" : "text-black"
                     }`}
                   >
                     {item.name}
-                  </button>
+                  </a>
                 ))}
               </nav>
             </div>
