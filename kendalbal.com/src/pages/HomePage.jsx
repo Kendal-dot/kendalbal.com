@@ -164,7 +164,7 @@ export default function HomePage() {
                 className="text-lg font-medium text-indigo-400 mb-4 animate-fade-in opacity-0"
                 style={{ animationDelay: "0.2s" }}
               >
-                Hello World! I'm
+                Hello, World! I'm
               </p>
               
               <h1
