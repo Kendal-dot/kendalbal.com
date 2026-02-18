@@ -50,7 +50,7 @@ export default function HomePage() {
   const projectsData = [
     {
       id: 1,
-      title: "Foodisave",
+      title: "Foodisave (Under Reconstruction)",
       description:
         "AI-Powered Recipe Management Platform. A full-stack web application that helps reduce food waste by suggesting recipes based on ingredient detection from images, featuring AI-powered recipe generation, smart shopping list creation, and a chatbot for recipe questions.",
       technologies: ["Python", "FastAPI", "JavaScript", "React", "Tailwind CSS", "PostgreSQL", "Pydantic"],
@@ -330,7 +330,7 @@ export default function HomePage() {
                               rel="noopener noreferrer"
                               className="absolute bottom-4 left-4 flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-white/20"
                             >
-                              <span className="text-white font-medium">View Project</span>
+                              <span className="text-white font-medium">Under Reconstruction</span>
                               <svg
                                 className="w-5 h-5 text-white transform group-hover:translate-x-1 transition-transform duration-300"
                                 fill="none"
