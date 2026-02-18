@@ -481,8 +481,9 @@ export default function HomePage() {
                   HR processes, and building high-performing, people-first teams, skills I now bring to product and engineering work.
                 </p>
                 <p>
-                  I'm looking for an AI Developer internship from Oct 27, 2025 – Apr 26, 2026, in a collaborative environment that values
-                  creativity and technical rigor. I'll contribute with curiosity, humility, and fresh AI knowledge.
+                I am currently completing my internship at the Swedish Civil Defence and Resilience Agency where I apply my 
+skills to deliver value through AI. I support the team with analytical insights and contribute to the development of 
+scalable solutions.
                 </p>
               </div>
             </div>
